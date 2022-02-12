@@ -6,25 +6,22 @@ import './search-bar.css';
 const { TabPane } = Tabs;
 
 export default class SearchBar extends Component {
-    state ={
+  state = {};
 
-    }
-
-    render() {
-        return (
-            <Tabs defaultActiveKey="1" >
-                <TabPane tab="Search" key="1">
-                    <Form>
-                        <Form.Item>
-                            <Input placeholder='Type to search...'/>
-                        </Form.Item>      
-                    </Form>
-                </TabPane>
-                <TabPane tab="Rated" key="2">
-                    Content of Tab Pane 2
-                </TabPane>
-          </Tabs>
-        )
-    }
-
+  render() {
+    return (
+      <Tabs defaultActiveKey="1">
+        <TabPane tab="Search" key="1">
+          <Form>
+            <Form.Item>
+              <Input placeholder="Type to search..." />
+            </Form.Item>
+          </Form>
+        </TabPane>
+        <TabPane tab="Rated" key="2">
+          Content of Tab Pane 2
+        </TabPane>
+      </Tabs>
+    );
+  }
 }

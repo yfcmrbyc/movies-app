@@ -1,88 +1,88 @@
 p {
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 22px;
-    letter-spacing: 0.02em;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 22px;
+  letter-spacing: 0.02em;
 
-    color: #000000;
-    margin-right: 20px;
+  color: #000000;
+  margin-right: 20px;
 }
 
 .ant-page-header-heading-left {
-    flex-direction: column;
-    align-items: flex-start;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .ant-page-header {
-    padding: 0 0;
+  padding: 0 0;
 }
 
 .ant-page-header-heading-title {
-    font-weight: normal;
-    line-height: 28px;
-    max-width: 180px;
+  font-weight: normal;
+  line-height: 28px;
+  max-width: 180px;
 }
 .ant-page-header-heading-sub-title {
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 22px;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 22px;
 
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    color: #827E7E;
+  color: #827e7e;
 }
 .ant-tag {
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 15px;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
 
-    color: rgba(0, 0, 0, 0.65);
-    padding: 2px 5px;
-    margin-bottom: 10px;
+  color: rgba(0, 0, 0, 0.65);
+  padding: 2px 5px;
+  margin-bottom: 10px;
 }
 .movies-card {
-    max-width: 450px;
-    max-height: 280px;
-    display: flex;
-    margin-bottom: 35px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  max-width: 450px;
+  max-height: 280px;
+  display: flex;
+  margin-bottom: 35px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .movies-card__container {
-    padding-top: 10px;
-    padding-left: 20px;
-    max-width: 267px;
-    display: flex;
-    flex-direction: column;
+  padding-top: 10px;
+  padding-left: 20px;
+  max-width: 267px;
+  display: flex;
+  flex-direction: column;
 }
 
 .ant-rate {
-    font-size: 16.5px;
-    margin-top: auto;
-    margin-bottom: 20px;
+  font-size: 16.5px;
+  margin-top: auto;
+  margin-bottom: 20px;
 }
 
 .movies-image {
-    width: 183px;
+  width: 183px;
 }
 
 .all-tags {
-    display: block;
+  display: block;
 }
 
 .ant-page-header-heading-extra {
-    width: 30px;
-    height: 30px;
-    border: 2px solid #E9D100;
-    border-radius: 50%;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 22px;
-    display: flex;
-    align-items: center;
-    color: #000000;
-    padding-left: 5px;
-    margin: 5px 10px;
+  width: 30px;
+  height: 30px;
+  border: 2px solid #e9d100;
+  border-radius: 50%;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  color: #000000;
+  padding-left: 5px;
+  margin: 5px 10px;
 }
