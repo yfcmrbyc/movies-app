@@ -16,7 +16,7 @@ function textCropping(text) {
 
 function MoviesItem({ name, imgUrl, overview, releaseDate, rate }) {
   return (
-    <div className="movies-card">
+    <>
       <Image className="movies-image" src={`https://image.tmdb.org/t/p/w780/${imgUrl}`} alt={name} />
       <article className="movies-card__container">
         <PageHeader
@@ -32,7 +32,7 @@ function MoviesItem({ name, imgUrl, overview, releaseDate, rate }) {
         <p>{textCropping(overview)}</p>
         <Rate disabled allowHalf defaultValue={2.5} count="10" style={{ width: 240 }} />
       </article>
-    </div>
+    </>
   );
 }
 
