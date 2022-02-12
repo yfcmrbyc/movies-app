@@ -1,0 +1,10 @@
+.ant-tabs-tab {
+    padding: 12px 12px;
+}
+.ant-tabs-tab + .ant-tabs-tab {
+    margin: 0 0 0 16px;
+}
+
+.ant-tabs-nav-list {
+    margin: 0 auto;
+}
