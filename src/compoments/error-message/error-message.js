@@ -4,15 +4,15 @@ import { Alert } from 'antd';
 import './error-message.css';
 
 function ErrorMessage() {
-    return (
-        <Alert
-            message="Error"
-            description="Unfortunately, something went wrong.
+  return (
+    <Alert
+      message="Error"
+      description="Unfortunately, something went wrong.
             Please check the network quality and reload the page."
-            type="error"
-            showIcon
-      />
-    );
+      type="error"
+      showIcon
+    />
+  );
 }
 
 export default ErrorMessage;
