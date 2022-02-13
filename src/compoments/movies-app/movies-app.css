@@ -59,3 +59,7 @@ body {
 .ant-pagination.mini .ant-pagination-item {
   margin: 0 3px;
 }
+
+.ant-pagination::after {
+  display: none;
+}

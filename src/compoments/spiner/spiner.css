@@ -1,3 +1,12 @@
 .spin-container {
-  margin: 30px auto;
+  margin: 0 auto 77vh auto;
+}
+
+.ant-spin {
+  display: flex;
+  align-items: center;
+}
+
+.ant-spin-dot {
+  margin-right: 10px;
 }

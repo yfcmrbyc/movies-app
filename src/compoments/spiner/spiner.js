@@ -6,8 +6,8 @@ import './spiner.css';
 
 function Spiner() {
   return (
-    <Space size="middle" className="spin-container">
-      <Spin size="large" />
+    <Space size={500} className="spin-container">
+      <Spin size="large" tip="Loading..." />
     </Space>
   );
 }

@@ -1,5 +1,4 @@
-.ant-alert-error {
-  margin: 15px auto;
-
+.ant-alert {
+  margin: 0 auto 36px auto;
   padding: 30px 30px;
 }
