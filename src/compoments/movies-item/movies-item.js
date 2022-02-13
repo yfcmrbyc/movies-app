@@ -6,24 +6,29 @@ import PropTypes from 'prop-types';
 import './movies-item.css';
 
 function textCropping(text) {
-  if (text.length < 150) {
-    return text;
-  } else {
-    const limit = text.split('').slice(0, 145).lastIndexOf(' ');
-    return text.split('').slice(0, limit).concat(' ...').join('');
-  }
+
+  if (text.length > 175) {
+    const array = text.split('');
+    const limit = array.slice(0, 175).lastIndexOf(' ');
+    return array.slice(0, limit).concat(' ...').join('');
+  } 
+  return text;
 }
 
-function MoviesItem({ name, imgUrl, overview, releaseDate, rate }) {
+function MoviesItem({ vote_average: rate, poster_path: path, overview, release_date: releaseDate, title }) {
   return (
-    <>
-      <Image className="movies-image" src={`https://image.tmdb.org/t/p/w780/${imgUrl}`} alt={name} />
+    <li className="movies-card">
+      <Image 
+        className="movies-image" 
+        src={`https://image.tmdb.org/t/p/w780/${path}`} 
+        alt={title} 
+      />
       <article className="movies-card__container">
         <PageHeader
           className="site-page-header"
-          title={name}
-          subTitle={format(releaseDate, 'MMMM d, yyyy')}
-          extra={rate}
+          title={title}
+          subTitle={format(new Date(releaseDate), 'MMMM d, yyyy')}
+          extra={rate.toString()}
         />
         <ul className="all-tags">
           <Tag>Action</Tag>
@@ -32,15 +37,15 @@ function MoviesItem({ name, imgUrl, overview, releaseDate, rate }) {
         <p>{textCropping(overview)}</p>
         <Rate disabled allowHalf defaultValue={2.5} count="10" style={{ width: 240 }} />
       </article>
-    </>
+    </li>
   );
 }
 
 MoviesItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  imgUrl: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  poster_path: PropTypes.string.isRequired,
   overview: PropTypes.string.isRequired,
-  releaseDate: PropTypes.instanceOf(Date).isRequired,
-  rate: PropTypes.number.isRequired,
+  release_date: PropTypes.string.isRequired,
+  vote_average: PropTypes.number.isRequired,
 };
 export default MoviesItem;

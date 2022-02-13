@@ -1,58 +1,41 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import MovieService from '../api/api';
 import MoviesItem from '../movies-item/movies-item';
 import Spiner from '../spiner/spiner';
 import ErrorMessage from '../error-message/error-message';
 import './movies-list.css';
 
-const ListView = ({ movies }) =>
-  movies.map((movie) => (
-    <li key={movie.id} className="movies-card">
-      <MoviesItem
-        name={movie.title}
-        imgUrl={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`}
-        overview={movie.overview}
-        releaseDate={new Date(movie.release_date)}
-        rate={movie.vote_average}
-      />
-    </li>
-  ));
-
 export default class MoviesList extends Component {
-  movieService = new MovieService();
 
-  state = {
-    error: null,
+  static defaultProps = {
     isLoaded: false,
-    movies: [],
-  };
-
-  componentDidMount() {
-    this.movieService.getAllMovies().then(
-      (result) => {
-        this.setState({
-          isLoaded: true,
-          movies: result.results,
-        });
-      },
-      (error) => {
-        this.setState({
-          isLoaded: true,
-          error,
-        });
-      }
-    );
+    error: false,
+    movies: []
   }
 
+  static propTypes = {
+    isLoaded: PropTypes.bool,
+    error: PropTypes.bool,
+    movies: PropTypes.arrayOf(PropTypes.object)
+  }
+
+  componentDidMount() {
+  }
+
+  renderList = (movies) => movies.map((movie) => {
+    const { id, ...itemProps } = movie;
+    return <MoviesItem key={id} {...itemProps} />
+  });
+
   render() {
-    const { isLoaded, error, movies } = this.state;
+    const { isLoaded, error, movies } = this.props;
 
-    const hasData = isLoaded || !error;
+    const hasData = movies.length > 0;
 
-    const errorMessage = error ? <ErrorMessage erroe={error.message} /> : null;
+    const errorMessage = error ? <ErrorMessage /> : null;
     const spiner = !isLoaded ? <Spiner /> : null;
-    const list = hasData ? <ListView movies={movies} /> : null;
+    const list = hasData ? this.renderList(movies) : null;
 
     return (
       <ul>

@@ -1,27 +1,40 @@
-import { Form, Input, Tabs } from 'antd';
 import React, { Component } from 'react';
 
 import './search-bar.css';
-
-const { TabPane } = Tabs;
+import MoviesList from '../movies-list/movies-list';
 
 export default class SearchBar extends Component {
-  state = {};
+  state = {
+    label: ''
+  };
+  
+  onLabelChange = (event) => {
+    this.setState({
+      label: event.target.value,
+    });
+  };
+
+  onSubmit = (event) => {
+    event.preventDefault();
+    this.setState({
+      label: '',
+    });
+  };
 
   render() {
     return (
-      <Tabs defaultActiveKey="1">
-        <TabPane tab="Search" key="1">
-          <Form>
-            <Form.Item>
-              <Input placeholder="Type to search..." />
-            </Form.Item>
-          </Form>
-        </TabPane>
-        <TabPane tab="Rated" key="2">
-          Content of Tab Pane 2
-        </TabPane>
-      </Tabs>
+      <>
+        <form onSubmit={this.onSubmit}>
+          <input 
+            placeholder="Type to search..." 
+            className="search-bar"
+            type="search"
+            onChange={this.onLabelChange}
+            value={this.state.label}
+          />
+        </form>
+        <MoviesList {...this.props} />
+      </>
     );
   }
 }

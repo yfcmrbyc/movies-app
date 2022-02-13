@@ -1,10 +1,26 @@
-.ant-tabs-tab {
-  padding: 12px 12px;
-}
-.ant-tabs-tab + .ant-tabs-tab {
-  margin: 0 0 0 16px;
+
+.search-bar {
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 36px;
+  position: relative;
+  display: inline-block;
+  padding: 4px 11px;
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 14px;
+  line-height: 1.5715;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  transition: all 0.3s;
+  cursor: text;
+  font-family: inherit;
 }
 
-.ant-tabs-nav-list {
-  margin: 0 auto;
+.search-bar:focus, 
+.search-bar:hover, 
+.search-bar:active {
+  outline: none;
+  border: 1px solid #40a9ff;  
 }

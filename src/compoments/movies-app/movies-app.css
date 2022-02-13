@@ -12,6 +12,17 @@ body {
   padding: 15px 36px;
 }
 
+.ant-tabs-tab {
+  padding: 12px 12px;
+}
+.ant-tabs-tab + .ant-tabs-tab {
+  margin: 0 0 0 16px;
+}
+
+.ant-tabs-nav-list {
+  margin: 0 auto;
+}
+
 .ant-tabs-nav::before {
   display: none;
 }
@@ -40,7 +51,7 @@ body {
 }
 
 .ant-pagination {
-  width: 204px;
+  width: 300px;
   font-size: 12px;
   margin: 0 auto;
 }
