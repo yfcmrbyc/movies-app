@@ -10,17 +10,15 @@ import Spiner from '../spiner/spiner';
 import ErrorMessage from '../error-message/error-message';
 import AlertMessage from '../alert-message/alert-message';
 
-
 export default class SearchBar extends Component {
-
   movieService = new MovieService();
 
   static propTypes = {
     sessionID: PropTypes.string.isRequired,
-    isLoaded: PropTypes.bool.isRequired, 
-    error: PropTypes.bool.isRequired, 
+    isLoaded: PropTypes.bool.isRequired,
+    error: PropTypes.bool.isRequired,
     errorMessage: PropTypes.string.isRequired,
-    genres: PropTypes.arrayOf(PropTypes.object).isRequired
+    genres: PropTypes.arrayOf(PropTypes.object).isRequired,
   };
 
   state = {
@@ -31,7 +29,7 @@ export default class SearchBar extends Component {
     error: false,
     errorMessage: null,
     query: null,
-    sessionID: ''
+    sessionID: '',
   };
 
   componentDidMount() {
@@ -40,18 +38,16 @@ export default class SearchBar extends Component {
     console.log(isLoaded);
 
     if (isLoaded) {
-      
       this.searchMovies('return');
 
       this.setState(() => ({
-        sessionID
+        sessionID,
       }));
-
     } else if (error) {
       this.setState(() => ({
         isLoading: false,
         error,
-        errorMessage
+        errorMessage,
       }));
     }
   }
@@ -86,9 +82,7 @@ export default class SearchBar extends Component {
     this.searchMovies(this.state.query, page);
   };
 
-
   onLabelChange = (event) => {
-
     const debouncedSearchMovies = debounce(this.searchMovies, 1000);
 
     if (event.target.value.length > 0) {
@@ -108,7 +102,6 @@ export default class SearchBar extends Component {
   };
 
   render() {
-
     const { searchResult, isLoading, error, errorMessage, sessionID, currentPage, query } = this.state;
     const { total_pages: total, results: movies, total_results: totalResults } = searchResult;
 
@@ -118,7 +111,6 @@ export default class SearchBar extends Component {
     const spinerSearchBar = isLoading ? <Spiner /> : null;
     const listMovies = hasData ? <MoviesList movies={movies} sessionID={sessionID} genres={this.props.genres} /> : null;
     const notFound = totalResults === 0 ? <AlertMessage query={query} /> : null;
-
 
     return (
       <>

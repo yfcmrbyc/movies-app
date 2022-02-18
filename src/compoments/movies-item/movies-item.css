@@ -54,12 +54,11 @@ header {
   font-variant: tabular-nums;
   line-height: 1.5715;
   list-style: none;
-  font-feature-settings: 'tnum', "tnum";
+  font-feature-settings: 'tnum', 'tnum';
   position: relative;
   padding: 0;
   background-color: #fff;
   display: flex;
-
 }
 
 .title-container {
@@ -84,19 +83,19 @@ header {
 }
 
 .subtitle {
-    color: rgba(0, 0, 0, 0.45);
-    font-size: 14px;
-    line-height: 1.5715;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 22px;
-    display: flex;
-    align-items: center;
-    color: #827e7e;
-  }
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 14px;
+  line-height: 1.5715;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  color: #827e7e;
+}
 
 .rating {
   width: 30px;
@@ -115,17 +114,17 @@ header {
 }
 
 .low-rating {
-  border: 2px solid #E90000;
+  border: 2px solid #e90000;
 }
 
 .average-rating {
-  border: 2px solid #E97E00;
+  border: 2px solid #e97e00;
 }
 
 .above-average-rating {
-  border: 2px solid #E9D100;
+  border: 2px solid #e9d100;
 }
 
 .high-rating {
-  border: 2px solid #66E900;
+  border: 2px solid #66e900;
 }

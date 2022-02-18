@@ -8,7 +8,6 @@ import SearchBar from '../search-bar/search-bar';
 import Spiner from '../spiner/spiner';
 import ErrorMessage from '../error-message/error-message';
 
-
 const { TabPane } = Tabs;
 
 export default class MoviesApp extends Component {
@@ -19,59 +18,58 @@ export default class MoviesApp extends Component {
     isLoaded: false,
     error: false,
     errorMessage: '',
-    genres: []
+    genres: [],
   };
 
   componentDidMount() {
-
-    this.movieService.getGenres()
-    .then(res => {
-      this.setState(() => ({
-        genres: res.genres
-      }))
-    })
-    .catch(err => {
-      this.setState({
-        isLoaded: true,
-        error: true,
-        errorMessage: err.message,
+    this.movieService
+      .getGenres()
+      .then((res) => {
+        this.setState(() => ({
+          genres: res.genres,
+        }));
+      })
+      .catch((err) => {
+        this.setState({
+          isLoaded: true,
+          error: true,
+          errorMessage: err.message,
+        });
       });
-    })
 
-    this.movieService.getSessionID()
-      .then(res => {
-        
+    this.movieService
+      .getSessionID()
+      .then((res) => {
         if (res.success) {
           return res.guest_session_id;
         } else {
           throw new Error('Something went horribly wrong...');
         }
       })
-      .then(result => {
+      .then((result) => {
         console.log(result);
 
         this.setState(() => ({
           sessionID: result,
-          isLoaded: true
+          isLoaded: true,
         }));
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({
           isLoaded: true,
           error: true,
           errorMessage: err.message,
         });
-      })
+      });
   }
 
   render() {
-
     const { isLoaded, error, errorMessage } = this.state;
 
     const spinerApp = !isLoaded ? <Spiner /> : null;
     const searchBar = isLoaded ? <SearchBar {...this.state} /> : null;
     const errorApp = error ? <ErrorMessage message={errorMessage} /> : null;
-  
+
     return (
       <main className="app-container">
         <Tabs defaultActiveKey="1">

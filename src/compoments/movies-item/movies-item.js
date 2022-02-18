@@ -23,67 +23,57 @@ export default class MoviesItem extends Component {
     release_date: PropTypes.string.isRequired,
     sessionID: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
-    genres: PropTypes.arrayOf(PropTypes.object).isRequired
+    genres: PropTypes.arrayOf(PropTypes.object).isRequired,
   };
 
   state = {
     valueRate: null,
-    isRated: false
-  }
+    isRated: false,
+  };
 
   componentDidUpdate(prevState) {
-    const { movie: {id}, sessionID } = this.props;
+    const {
+      movie: { id },
+      sessionID,
+    } = this.props;
 
     if (this.state.valueRate !== prevState.valueRate) {
-      this.movieService.postRateMovie(id, sessionID, this.state.valueRate)
-        .then()
+      this.movieService.postRateMovie(id, sessionID, this.state.valueRate).then();
     }
-
   }
 
   renderRateCount = () => {
-
     const { valueRate: value } = this.state;
-    const rateClassName = classNames(
-      "rating",
-      {
-        "low-rating": value < 3,
-        "average-rating": value > 3 && value < 5,
-        "above-average-rating": value > 5 && value < 7,
-        "high-rating": value > 7
-      });
+    const rateClassName = classNames('rating', {
+      'low-rating': value < 3,
+      'average-rating': value > 3 && value < 5,
+      'above-average-rating': value > 5 && value < 7,
+      'high-rating': value > 7,
+    });
 
-    return (
-      <span className={rateClassName} >
-        {value.toString()}
-      </span>
-    );  
-  }
+    return <span className={rateClassName}>{value.toString()}</span>;
+  };
 
   renderGenres = (genres, ids) => {
     const tags = [];
 
-    ids.forEach(id => {
-      genres.forEach(item => {
-        if(item.id === id){
-          tags.push(
-            <Tag>
-              {item.name}
-            </Tag>
-            );
+    ids.forEach((id) => {
+      genres.forEach((item) => {
+        if (item.id === id) {
+          tags.push(<Tag>{item.name}</Tag>);
         }
-      })      
+      });
     });
 
     return tags;
-  }
+  };
 
   onRateChange = (value) => {
     this.setState(() => ({
       valueRate: value,
-      isRated: true
-    }))
-  }
+      isRated: true,
+    }));
+  };
 
   textCropping(text) {
     if (text.length > 210) {
@@ -96,8 +86,7 @@ export default class MoviesItem extends Component {
   }
 
   render() {
-
-    console.log(this.props)
+    console.log(this.props);
 
     const { movie, genres } = this.props;
     const { poster_path: path, overview, release_date: releaseDate, title, genre_ids: genreIds } = movie;
@@ -106,21 +95,19 @@ export default class MoviesItem extends Component {
     const date = releaseDate.length > 0 ? format(new Date(releaseDate), 'MMMM d, yyyy') : 'Release date unknown';
     const rateCount = this.state.isRated ? this.renderRateCount() : null;
     const genre = genreIds.length > 0 ? this.renderGenres(genres, genreIds) : null;
-  
+
     return (
       <>
         <Image className="movies-image" src={url} alt={title} />
         <article className="movies-card__container">
           <header>
-            <div className="title-container" >
-              <h3 className="title" >{title}</h3>
-              <span className="subtitle" >{date}</span>
+            <div className="title-container">
+              <h3 className="title">{title}</h3>
+              <span className="subtitle">{date}</span>
             </div>
             {rateCount}
           </header>
-          <ul className="all-tags">
-            {genre}
-          </ul>
+          <ul className="all-tags">{genre}</ul>
           <p>{this.textCropping(overview)}</p>
           <Rate allowHalf defaultValue={0} count="10" onChange={this.onRateChange} />
         </article>
@@ -128,4 +115,3 @@ export default class MoviesItem extends Component {
     );
   }
 }
-
