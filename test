@@ -1,0 +1,56 @@
+<div class="ant-page-header site-page-header ant-page-header-ghost ant-page-header-compact">
+<div class="ant-page-header-heading">
+<div class="ant-page-header-heading-left">
+<span class="ant-page-header-heading-title" title="xXx: Return of Xander Cage">xXx: Return of Xander Cage</span><span class="ant-page-header-heading-sub-title" title="January 13, 2017">January 13, 2017</span></div><span class="ant-page-header-heading-extra">5.8</span></div></div>
+
+
+container-titlr-subtitle {
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    color: #827e7e;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+title {
+    margin-right: 12px;
+    margin-bottom: 0;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 32px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: normal;
+    line-height: 28px;
+    max-width: 195px;
+    margin-right: 0;
+}
+subtitle {
+    margin-right: 12px;
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 14px;
+    line-height: 1.5715;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    color: #827e7e;
+
+}
+
+
+searchResult {
+page: 1
+results: (20) [movies]
+total_pages: 82
+total_results: 1624
+}

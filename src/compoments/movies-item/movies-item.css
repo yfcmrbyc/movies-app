@@ -3,7 +3,6 @@ p {
   font-size: 12px;
   line-height: 22px;
   letter-spacing: 0.02em;
-
   color: #000000;
   margin-right: 20px;
 }
@@ -13,31 +12,6 @@ p {
   height: 280px;
 }
 
-.ant-page-header-heading-left {
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.ant-page-header {
-  padding: 0 0;
-}
-
-.ant-page-header-heading-title {
-  font-weight: normal;
-  line-height: 28px;
-  max-width: 195px;
-  margin-right: 0;
-}
-.ant-page-header-heading-sub-title {
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 22px;
-
-  display: flex;
-  align-items: center;
-
-  color: #827e7e;
-}
 .ant-tag {
   font-weight: normal;
   font-size: 12px;
@@ -72,10 +46,61 @@ p {
   display: block;
 }
 
-.ant-page-header-heading-extra {
+header {
+  max-width: 250px;
+  margin: 5px 0;
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5715;
+  list-style: none;
+  font-feature-settings: 'tnum', "tnum";
+  position: relative;
+  padding: 0;
+  background-color: #fff;
+  display: flex;
+
+}
+
+.title-container {
+  display: flex;
+  align-items: center;
+  color: #827e7e;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.title {
+  margin-bottom: 0;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 32px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 200px;
+  margin-right: 0;
+}
+
+.subtitle {
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 14px;
+    line-height: 1.5715;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    color: #827e7e;
+  }
+
+.rating {
   width: 30px;
   height: 30px;
-  border: 2px solid #e9d100;
   border-radius: 50%;
   font-style: normal;
   font-weight: normal;
@@ -85,6 +110,22 @@ p {
   justify-content: center;
   align-items: center;
   color: #000000;
-  margin-top: 5px;
-  margin-right: 10px;
+  margin: 0 10px 0 5px;
+  flex-shrink: 0;
+}
+
+.low-rating {
+  border: 2px solid #E90000;
+}
+
+.average-rating {
+  border: 2px solid #E97E00;
+}
+
+.above-average-rating {
+  border: 2px solid #E9D100;
+}
+
+.high-rating {
+  border: 2px solid #66E900;
 }

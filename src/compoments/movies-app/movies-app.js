@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Pagination, Tabs } from 'antd';
-import debounce from 'lodash.debounce';
+import { Tabs } from 'antd';
 
 import 'antd/dist/antd.css';
 import './movies-app.css';
 import MovieService from '../api/api';
 import SearchBar from '../search-bar/search-bar';
+import Spiner from '../spiner/spiner';
+import ErrorMessage from '../error-message/error-message';
+
 
 const { TabPane } = Tabs;
 
@@ -13,80 +15,75 @@ export default class MoviesApp extends Component {
   movieService = new MovieService();
 
   state = {
-    searchResult: {},
-    currentPage: 1,
-    isLoading: false,
+    sessionID: '',
+    isLoaded: false,
     error: false,
-    errorMessage: null,
-    query: null,
+    errorMessage: '',
+    genres: []
   };
 
   componentDidMount() {
-    this.searchMovies('return');
-  }
 
-  searchMovies = (query, currentPage = 1) => {
-    this.setState({
-      isLoading: true,
-    });
+    this.movieService.getGenres()
+    .then(res => {
+      this.setState(() => ({
+        genres: res.genres
+      }))
+    })
+    .catch(err => {
+      this.setState({
+        isLoaded: true,
+        error: true,
+        errorMessage: err.message,
+      });
+    })
 
-    this.movieService
-      .getAllMovies(query, currentPage)
-      .then((res) => {
-        console.log(res);
-        this.setState({
-          isLoading: false,
-          query,
-          searchResult: { ...res },
-        });
+    this.movieService.getSessionID()
+      .then(res => {
+        
+        if (res.success) {
+          return res.guest_session_id;
+        } else {
+          throw new Error('Something went horribly wrong...');
+        }
       })
-      .catch((err) => {
+      .then(result => {
+        console.log(result);
+
+        this.setState(() => ({
+          sessionID: result,
+          isLoaded: true
+        }));
+      })
+      .catch(err => {
         this.setState({
-          isLoading: false,
+          isLoaded: true,
           error: true,
           errorMessage: err.message,
         });
-      });
-  };
-
-  changePage = (page) => {
-    this.setState({
-      currentPage: page,
-    });
-    this.searchMovies(this.state.query, page);
-  };
+      })
+  }
 
   render() {
-    const {
-      currentPage,
-      searchResult: { results, total_results: total },
-      ...moviesData
-    } = this.state;
 
+    const { isLoaded, error, errorMessage } = this.state;
+
+    const spinerApp = !isLoaded ? <Spiner /> : null;
+    const searchBar = isLoaded ? <SearchBar {...this.state} /> : null;
+    const errorApp = error ? <ErrorMessage message={errorMessage} /> : null;
+  
     return (
       <main className="app-container">
         <Tabs defaultActiveKey="1">
           <TabPane tab="Search" key="1">
-            <SearchBar
-              {...moviesData}
-              page={currentPage}
-              movies={results}
-              totalResults={total}
-              searchMovies={debounce(this.searchMovies, 800)}
-            />
+            {errorApp}
+            {spinerApp}
+            {searchBar}
           </TabPane>
           <TabPane tab="Rated" key="2">
             Content of Tab Pane 2
           </TabPane>
         </Tabs>
-        <Pagination
-          size="small"
-          total={total}
-          defaultPageSize={20}
-          showSizeChanger={false}
-          current={currentPage}
-          onChange={this.changePage}
-        />
       </main>
     );
   }
