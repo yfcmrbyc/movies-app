@@ -9,7 +9,7 @@ function ErrorMessage({ message }) {
 }
 
 ErrorMessage.propTypes = {
-  message: PropTypes.string,
+  message: PropTypes.instanceOf(Error),
 };
 
 ErrorMessage.defaultProps = {

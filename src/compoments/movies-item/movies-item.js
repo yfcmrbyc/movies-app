@@ -6,44 +6,21 @@ import classNames from 'classnames/bind';
 
 import imgURL from './NoImageFound.jpg';
 import './movies-item.css';
-import MovieService from '../api/api';
+import { GenresConsumer } from '../genres-context/genres-context';
 
 export default class MoviesItem extends Component {
-  movieService = new MovieService();
-
-  static defaultProps = {
-    poster_path: null,
-  };
-
   static propTypes = {
-    movie: PropTypes.shape.isRequired,
-    title: PropTypes.string.isRequired,
-    poster_path: PropTypes.string,
-    overview: PropTypes.string.isRequired,
-    release_date: PropTypes.string.isRequired,
-    sessionID: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    genres: PropTypes.arrayOf(PropTypes.object).isRequired,
+    movie: PropTypes.objectOf(PropTypes.any).isRequired,
+    rateMovie: PropTypes.func.isRequired,
   };
 
-  state = {
-    valueRate: null,
-    isRated: false,
-  };
-
-  componentDidUpdate(prevState) {
-    const {
-      movie: { id },
-      sessionID,
-    } = this.props;
-
-    if (this.state.valueRate !== prevState.valueRate) {
-      this.movieService.postRateMovie(id, sessionID, this.state.valueRate).then();
+  componentDidUpdate(prevProps) {
+    if (this.props.movie.rating !== prevProps.movie.rating) {
+      this.renderRateCount(Number(this.props.movie.rating));
     }
   }
 
-  renderRateCount = () => {
-    const { valueRate: value } = this.state;
+  renderRateCount = (value) => {
     const rateClassName = classNames('rating', {
       'low-rating': value < 3,
       'average-rating': value > 3 && value < 5,
@@ -57,10 +34,10 @@ export default class MoviesItem extends Component {
   renderGenres = (genres, ids) => {
     const tags = [];
 
-    ids.forEach((id) => {
-      genres.forEach((item) => {
-        if (item.id === id) {
-          tags.push(<Tag>{item.name}</Tag>);
+    genres.forEach((genre) => {
+      ids.forEach((id) => {
+        if (id === genre.id) {
+          tags.push(<Tag key={id}>{genre.name}</Tag>);
         }
       });
     });
@@ -69,16 +46,17 @@ export default class MoviesItem extends Component {
   };
 
   onRateChange = (value) => {
-    this.setState(() => ({
-      valueRate: value,
-      isRated: true,
-    }));
+    const {
+      movie: { id },
+    } = this.props;
+
+    this.props.rateMovie(id, value);
   };
 
   textCropping(text) {
-    if (text.length > 210) {
+    if (text.length > 150) {
       const array = text.split('');
-      const limit = array.slice(0, 210).lastIndexOf(' ');
+      const limit = array.slice(0, 150).lastIndexOf(' ');
 
       return array.slice(0, limit).concat(' ...').join('');
     }
@@ -86,15 +64,12 @@ export default class MoviesItem extends Component {
   }
 
   render() {
-    console.log(this.props);
-
-    const { movie, genres } = this.props;
-    const { poster_path: path, overview, release_date: releaseDate, title, genre_ids: genreIds } = movie;
+    const { movie } = this.props;
+    const { poster_path: path, overview, release_date: releaseDate, title, genre_ids: genresIds, rating } = movie;
 
     const url = path ? `https://image.tmdb.org/t/p/w780/${path}` : imgURL;
-    const date = releaseDate.length > 0 ? format(new Date(releaseDate), 'MMMM d, yyyy') : 'Release date unknown';
-    const rateCount = this.state.isRated ? this.renderRateCount() : null;
-    const genre = genreIds.length > 0 ? this.renderGenres(genres, genreIds) : null;
+    const date = releaseDate ? format(new Date(releaseDate), 'MMMM d, yyyy') : 'Release date unknown';
+    const rateCount = rating > 0 ? this.renderRateCount(Number(rating)) : null;
 
     return (
       <>
@@ -107,9 +82,11 @@ export default class MoviesItem extends Component {
             </div>
             {rateCount}
           </header>
-          <ul className="all-tags">{genre}</ul>
+          <GenresConsumer>
+            {(genres) => <ul className="all-tags">{this.renderGenres(genres, genresIds)}</ul>}
+          </GenresConsumer>
           <p>{this.textCropping(overview)}</p>
-          <Rate allowHalf defaultValue={0} count="10" onChange={this.onRateChange} />
+          <Rate allowHalf defaultValue={rating} count="10" onChange={this.onRateChange} />
         </article>
       </>
     );
