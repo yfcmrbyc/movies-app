@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Pagination } from 'antd';
 
 import MoviesItem from '../movies-item/movies-item';
 import './movies-list.css';
@@ -7,6 +8,10 @@ import './movies-list.css';
 export default class MoviesList extends Component {
   static propTypes = {
     movies: PropTypes.arrayOf(PropTypes.object),
+    total: PropTypes.number.isRequired,
+    page: PropTypes.number.isRequired,
+    changePage: PropTypes.func.isRequired,
+    tab: PropTypes.string.isRequired,
   };
 
   static defaultProps = {
@@ -26,6 +31,7 @@ export default class MoviesList extends Component {
   componentDidUpdate(prevState) {
     if (this.state.ratedMovies !== prevState.ratedMovies) {
       sessionStorage.setItem('sessionRatedMovies', JSON.stringify(this.state));
+      this.renderItems(this.state.ratedMovies);
     }
   }
 
@@ -51,13 +57,27 @@ export default class MoviesList extends Component {
   renderItems = (movies) =>
     movies.map((movie) => (
       <li key={movie.id} className="movies-card">
-        <MoviesItem movie={movie} rateMovie={this.rateMovie} />
+        <MoviesItem movie={movie} rateMovie={this.rateMovie} tab={this.props.tab} />
       </li>
     ));
 
   render() {
-    const { movies } = this.props;
+    const { movies, total, page, changePage } = this.props;
 
-    return <ul>{this.renderItems(movies)}</ul>;
+    return (
+      <>
+        <ul>{this.renderItems(movies)}</ul>
+        {total > 0 && (
+          <Pagination
+            size="small"
+            total={total}
+            defaultPageSize={20}
+            showSizeChanger={false}
+            current={page}
+            onChange={changePage}
+          />
+        )}
+      </>
+    );
   }
 }

@@ -12,19 +12,18 @@ export default class MoviesItem extends Component {
   static propTypes = {
     movie: PropTypes.objectOf(PropTypes.any).isRequired,
     rateMovie: PropTypes.func.isRequired,
+    tab: PropTypes.string.isRequired,
   };
 
-  componentDidUpdate(prevProps) {
-    if (this.props.movie.rating !== prevProps.movie.rating) {
-      this.renderRateCount(Number(this.props.movie.rating));
-    }
-  }
+  state = {
+    rating: null,
+  };
 
   renderRateCount = (value) => {
     const rateClassName = classNames('rating', {
       'low-rating': value < 3,
-      'average-rating': value > 3 && value < 5,
-      'above-average-rating': value > 5 && value < 7,
+      'average-rating': value >= 3 && value <= 5,
+      'above-average-rating': value > 5 && value <= 7,
       'high-rating': value > 7,
     });
 
@@ -51,6 +50,9 @@ export default class MoviesItem extends Component {
     } = this.props;
 
     this.props.rateMovie(id, value);
+    this.setState(() => ({
+      rating: value,
+    }));
   };
 
   textCropping(text) {
@@ -64,12 +66,13 @@ export default class MoviesItem extends Component {
   }
 
   render() {
-    const { movie } = this.props;
+    const { movie, tab } = this.props;
     const { poster_path: path, overview, release_date: releaseDate, title, genre_ids: genresIds, rating } = movie;
 
     const url = path ? `https://image.tmdb.org/t/p/w780/${path}` : imgURL;
     const date = releaseDate ? format(new Date(releaseDate), 'MMMM d, yyyy') : 'Release date unknown';
-    const rateCount = rating > 0 ? this.renderRateCount(Number(rating)) : null;
+    const propsRating = rating > 0 ? this.renderRateCount(Number(rating)) : null;
+    const rateCount = this.state.rating && tab === 'rated' ? this.renderRateCount(this.state.rating) : propsRating;
 
     return (
       <>

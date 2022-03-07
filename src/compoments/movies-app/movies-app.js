@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { Tabs, Pagination } from 'antd';
+import { Tabs } from 'antd';
 import debounce from 'lodash.debounce';
 
 import 'antd/dist/antd.css';
 import './movies-app.css';
-import MovieService from '../api/api';
+import MovieService from '../../api/api';
 import SearchBar from '../search-bar/search-bar';
 import MoviesList from '../movies-list/movies-list';
 import Spiner from '../spiner/spiner';
 import ErrorMessage from '../error-message/error-message';
 import { GenresProvider } from '../genres-context/genres-context';
+import AlertMessage from '../alert-message/alert-message';
 
 const { TabPane } = Tabs;
 
@@ -90,13 +91,17 @@ export default class MoviesApp extends Component {
   };
 
   render() {
-    const { isLoaded, error, errorMessage, currentTab, searchedMovies, ratedMovies, genres, currentPage } = this.state;
+    const { isLoaded, error, errorMessage, currentTab, searchedMovies, ratedMovies, genres, currentPage, query } =
+      this.state;
 
     const spinerApp = !isLoaded ? <Spiner /> : null;
     const errorApp = error ? <ErrorMessage message={errorMessage} /> : null;
+    const alertMessage = searchedMovies.total_results === 0 ? <AlertMessage query={query} /> : null;
     const moviesList = currentTab === 'search' ? searchedMovies.results : ratedMovies;
     const total = currentTab === 'search' ? searchedMovies.total_results : ratedMovies.length;
-    const movies = isLoaded ? <MoviesList movies={moviesList} /> : null;
+    const movies = isLoaded ? (
+      <MoviesList movies={moviesList} total={total} page={currentPage} changePage={this.changePage} tab={currentTab} />
+    ) : null;
 
     return (
       <GenresProvider value={genres}>
@@ -106,6 +111,7 @@ export default class MoviesApp extends Component {
               <SearchBar searchMovies={debounce(this.searchMovies, 800)} />
               {errorApp}
               {spinerApp}
+              {alertMessage}
               {movies}
             </TabPane>
             <TabPane tab="Rated" key="rated">
@@ -114,14 +120,6 @@ export default class MoviesApp extends Component {
               {movies}
             </TabPane>
           </Tabs>
-          <Pagination
-            size="small"
-            total={total}
-            defaultPageSize={20}
-            showSizeChanger={false}
-            current={currentPage}
-            onChange={this.changePage}
-          />
         </main>
       </GenresProvider>
     );

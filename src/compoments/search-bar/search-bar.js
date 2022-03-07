@@ -13,8 +13,12 @@ export default class SearchBar extends Component {
   };
 
   onLabelChange = (event) => {
+    const { searchMovies } = this.props;
+
     if (event.target.value.length > 0) {
-      this.props.searchMovies(event.target.value);
+      searchMovies(event.target.value);
+    } else {
+      searchMovies('return');
     }
 
     this.setState(() => ({
